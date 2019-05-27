@@ -30,4 +30,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CString m_num;
+	CString m_count;
+	CString m_start;
+	CListCtrl m_list;
 };

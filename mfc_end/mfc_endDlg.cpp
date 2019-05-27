@@ -19,6 +19,9 @@
 
 CmfcendDlg::CmfcendDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFC_END_DIALOG, pParent)
+	, m_num(_T(""))
+	, m_count(_T(""))
+	, m_start(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -26,6 +29,10 @@ CmfcendDlg::CmfcendDlg(CWnd* pParent /*=nullptr*/)
 void CmfcendDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_NUM, m_num);
+	DDX_Text(pDX, IDC_COUNT, m_count);
+	DDX_Text(pDX, IDC_START, m_start);
+	DDX_Control(pDX, IDC_LIST1, m_list);
 }
 
 BEGIN_MESSAGE_MAP(CmfcendDlg, CDialogEx)
@@ -39,6 +46,10 @@ END_MESSAGE_MAP()
 BOOL CmfcendDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	m_list.SetExtendedStyle(LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT | LVS_EX_ONECLICKACTIVATE);
+	m_list.InsertColumn(0, _T("第n轮"), LVCFMT_LEFT, 130);
+	m_list.InsertColumn(1, _T("第x人出列"), LVCFMT_LEFT, 300);
 
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
