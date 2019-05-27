@@ -14,7 +14,8 @@
 
 
 // CmfcendDlg 对话框
-
+int NUM;
+int MAX;
 
 
 CmfcendDlg::CmfcendDlg(CWnd* pParent /*=nullptr*/)
@@ -33,11 +34,16 @@ void CmfcendDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_COUNT, m_count);
 	DDX_Text(pDX, IDC_START, m_start);
 	DDX_Control(pDX, IDC_LIST1, m_list);
+	DDX_Control(pDX, BTN_SET, m_set);
+	DDX_Control(pDX, BTN_START, m_star);
 }
 
 BEGIN_MESSAGE_MAP(CmfcendDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(BTN_SET, &CmfcendDlg::OnBnClickedSet)
+	ON_BN_CLICKED(BTN_START, &CmfcendDlg::OnBnClickedStart)
+	ON_BN_CLICKED(BTN_RESET, &CmfcendDlg::OnBnClickedReset)
 END_MESSAGE_MAP()
 
 
@@ -57,7 +63,7 @@ BOOL CmfcendDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-
+	m_star.EnableWindow(0);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -97,3 +103,54 @@ HCURSOR CmfcendDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CmfcendDlg::OnBnClickedSet()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData();
+	num = atoi(m_num);
+	count = atoi(m_count);
+	start = atoi(m_start);
+	game = new Game();
+	game->CreateGame(num);
+	game->SetStart(count);
+	NUM = 0;
+	MAX = 0;
+	m_set.EnableWindow(0);
+	m_star.EnableWindow(1);
+}
+
+
+void CmfcendDlg::OnBnClickedStart()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	int out = game->runonce(start);
+	CString str;
+	str.Format("%d", NUM + 1);
+	m_list.InsertItem(NUM, str);
+	CString outno;
+	outno.Format("%d", out);
+	CString output = "第" + outno + "名出列";
+	m_list.SetItemText(NUM, 1, output);
+	NUM++;
+	MAX++;
+	if (MAX >= num)
+	{
+		m_star.EnableWindow(0);
+		return;
+	}
+}
+
+
+void CmfcendDlg::OnBnClickedReset()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_set.EnableWindow(1);
+	m_star.EnableWindow(0);
+	m_num.SetString("");
+	m_count.SetString("");
+	m_start.SetString("");
+	m_list.DeleteAllItems();
+	UpdateData(false);
+}

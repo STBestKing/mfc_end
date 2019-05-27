@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "Game.h"
 
 
 // CmfcendDlg 对话框
@@ -35,4 +36,13 @@ public:
 	CString m_count;
 	CString m_start;
 	CListCtrl m_list;
+	int num;
+	int count;
+	int start;
+	Game* game;
+	afx_msg void OnBnClickedSet();
+	afx_msg void OnBnClickedStart();
+	afx_msg void OnBnClickedReset();
+	CButton m_set;
+	CButton m_star;
 };

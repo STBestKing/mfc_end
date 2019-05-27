@@ -11,7 +11,6 @@
 #define BTN_RESET                       1005
 #define BTN_START                       1006
 #define BTN_SET                         1007
-#define IDC_LIST2                       1008
 #define IDC_LOG                         1008
 
 // Next default values for new objects
