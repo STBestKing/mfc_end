@@ -14,7 +14,7 @@ Game::~Game()
 {
 }
 
-void Game::CreateGame(int n)
+void Game::CreateGame(int n) //建立游戏玩家链表
 {
 	Player* temp = NULL, * end = NULL;
 	H = end = new Player();
@@ -29,7 +29,7 @@ void Game::CreateGame(int n)
 	}
 }
 
-void Game::SetStart(int count)
+void Game::SetStart(int count) //寻找开始位置（移动H位置跟rare位置）
 {
 	rare = H;
 	while (rare->next != H)
@@ -43,7 +43,7 @@ void Game::SetStart(int count)
 	}
 }
 
-int Game::runonce(int start)
+int Game::runonce(int start) //出局一名玩家（H后的第start名）
 {
 	if (H)
 	{

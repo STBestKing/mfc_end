@@ -105,52 +105,56 @@ HCURSOR CmfcendDlg::OnQueryDragIcon()
 
 
 
-void CmfcendDlg::OnBnClickedSet()
+void CmfcendDlg::OnBnClickedSet() //设定数据 初始化
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData();
-	num = atoi(m_num);
-	count = atoi(m_count);
-	start = atoi(m_start);
-	game = new Game();
-	game->CreateGame(num);
-	game->SetStart(count);
-	NUM = 0;
-	MAX = 0;
-	m_set.EnableWindow(0);
-	m_star.EnableWindow(1);
+	num = atoi(m_num); //num为总数人数 （从编辑框获取的变量为CString所以使用atoi转换为int，下同）
+	count = atoi(m_count);//count为开始位置
+	start = atoi(m_start);//start为计数
+	game = new Game(); //建立一局游戏
+	game->CreateGame(num); //输入游戏信息
+	game->SetStart(count);//同上
+
+	NUM = 0;//NUM记录表格数据条数，初始为0
+	MAX = 0;//MAX记录已出局人数    这俩其实用一个就够，当时脑抽
+
+	m_set.EnableWindow(0);//禁用此button
+	m_star.EnableWindow(1);//激活“开始”button
 }
 
 
-void CmfcendDlg::OnBnClickedStart()
+void CmfcendDlg::OnBnClickedStart() //点一次出局一人
 {
 	// TODO: 在此添加控件通知处理程序代码
-	int out = game->runonce(start);
+	int out = game->runonce(start);//出局一人切记录出局人标记
 	CString str;
-	str.Format("%d", NUM + 1);
-	m_list.InsertItem(NUM, str);
+	str.Format("%d", NUM + 1); //int转CString
+	m_list.InsertItem(NUM, str);//表格插入一行信息
 	CString outno;
-	outno.Format("%d", out);
-	CString output = "第" + outno + "名出列";
-	m_list.SetItemText(NUM, 1, output);
+	outno.Format("%d", out);//同上
+	CString output = "第" + outno + "名出列";//建立第二列内容
+	m_list.SetItemText(NUM, 1, output); //跟前面一样
+
 	NUM++;
 	MAX++;
-	if (MAX >= num)
+
+	if (MAX >= num) //判断是否游戏结束
 	{
-		m_star.EnableWindow(0);
+		m_star.EnableWindow(0);//禁用“开始”button
 		return;
 	}
 }
 
 
-void CmfcendDlg::OnBnClickedReset()
+void CmfcendDlg::OnBnClickedReset() //重置
 {
 	// TODO: 在此添加控件通知处理程序代码
-	m_set.EnableWindow(1);
-	m_star.EnableWindow(0);
-	m_num.SetString("");
-	m_count.SetString("");
-	m_start.SetString("");
-	m_list.DeleteAllItems();
-	UpdateData(false);
+	m_set.EnableWindow(1);//激活“设定”button
+	m_star.EnableWindow(0);//禁用“开始”button
+	m_num.SetString("");//清空输入框
+	m_count.SetString("");//同上
+	m_start.SetString("");//me too
+	m_list.DeleteAllItems();//删除表格
+	UpdateData(false);//使清空表格动作生效
 }
